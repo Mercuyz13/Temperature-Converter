@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Termómetro</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body id="body">
+    <div id="video-popup">
+      <video width="800" controls id="myVideo">
+        <source src="dont click here.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div id="main-container">
+      <h1>❄️ Conversor de temperaturas 🔥</h1>
+      <table>
+        <tr>
+          <th>Unidade de origem</th>
+          <th>Valor</th>
+          <th>Converter para</th>
+          <th>Converter</th>
+        </tr>
+        <tr>
+          <td>
+            <select name="unidade1" id="unidade1">
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
+            </select>
+          </td>
+          <td>
+            <input type="number" name="valor" id="valor" placeholder="Digite a temperatura" oninput="inputNumber()"/>
+          </td>
+          <td>
+            <select name="unidade2" id="unidade2">
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
+            </select>
+          </td>
+          <td>
+            <button id="converter" onclick="convert()">Converter</button>
+          </td>
+        </tr>
+      </table>
+      <p id="resultado"></p>
+    </div>
+    <script>
+      function inputNumber() {
+        const valorInput = document.getElementById("valor").value;
+        const convertButton = document.getElementById("converter");
+
+        if (valorInput === "") {
+          convertButton.style.backgroundColor = "#353535";
+          convertButton.style.borderColor = "#242424";
+          return;
+        }
+
+        if (valorInput > 22) {
+          convertButton.style.backgroundColor = "red";
+          convertButton.style.borderColor = "#aa0000";
+        } else if (valorInput < 15) {
+          convertButton.style.backgroundColor = "rgb(0, 60, 255)"
+          convertButton.style.borderColor = "#000cb9";
+        } else {
+          convertButton.style.backgroundColor = "#ffe600e5";
+          convertButton.style.borderColor = "#ccb800";
+        }
+      }
+
+      function convert() {
+        const unidade1 = document.getElementById("unidade1").value;
+        const unidade2 = document.getElementById("unidade2").value;
+        const valor = document.getElementById("valor").value;
+        const body = document.getElementById("body");
+        const box = document.getElementById("video-popup");
+        const video = document.getElementById("myVideo")
+
+        if (unidade1 === "celsius" && unidade2 === "celsius") {
+          document.getElementById("resultado").innerHTML = "Não podemos converter duas unidades iguais";
+          body.style.backgroundColor = "#e2e2e2"
+          box.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+          return
+        } else if (unidade1 === "fahrenheit" && unidade2 === "fahrenheit") {
+          document.getElementById("resultado").innerHTML = "Não podemos converter duas unidades iguais";
+          body.style.backgroundColor = "#e2e2e2"
+          box.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+          return
+        } else if (unidade1 === "kelvin" && unidade2 === "kelvin") {
+          document.getElementById("resultado").innerHTML = "Não podemos converter duas unidades iguais";
+          body.style.backgroundColor = "#e2e2e2"
+          box.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+          return
+        }
+
+
+        // Verificar se o valor é exatamente 67
+        if (parseFloat(valor) === 67) {
+          body.style.backgroundColor = "red";
+          box.style.display = "block";
+          video.currentTime = 0;
+          video.play();
+        } else {
+          box.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+          // Definir cores de fundo baseado na temperatura
+          if (valor > 22) {
+            body.style.backgroundColor = "red";
+          } else if (valor < 15) {
+            body.style.backgroundColor = "rgb(0, 60, 255)";
+          } else {
+            body.style.backgroundColor = "#ffe600e5";
+          }
+        }
+
+        if (valor === "") {
+          document.getElementById("resultado").innerHTML = "Por favor, insira um valor válido para conversão.";
+          body.style.backgroundColor = "#e2e2e2"
+          box.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+          return;
+        }
+
+        if (unidade1 === "celsius" && unidade2 === "fahrenheit") {
+            const resultado = (valor * 1.8) + 32;
+            document.getElementById("resultado").innerHTML = `${valor}°C é igual a ${resultado.toFixed(2)}°F`;
+        } else if (unidade1 === "fahrenheit" && unidade2 === "celsius") {
+            const resultado = (valor - 32) * (5/9);
+            document.getElementById("resultado").innerHTML = `${valor}°F é igual a ${resultado.toFixed(2)}°C`;
+        } else if (unidade1 === "celsius" && unidade2 === "kelvin") {
+            const resultado = parseFloat(valor) + 273.15;
+            document.getElementById("resultado").innerHTML = `${valor}°C é igual a ${resultado.toFixed(2)}K`;
+        } else if (unidade1 === "kelvin" && unidade2 === "celsius") {
+            const resultado = valor - 273.15;
+            document.getElementById("resultado").innerHTML = `${valor}K é igual a ${resultado.toFixed(2)}°C`;
+        } else if (unidade1 === "fahrenheit" && unidade2 === "kelvin") {
+            const resultado = ((valor - 32) * (5/9)) + 273.15;
+            document.getElementById("resultado").innerHTML = `${valor}°F é igual a ${resultado.toFixed(2)}K`;
+        } else if (unidade1 === "kelvin" && unidade2 === "fahrenheit") {
+            const resultado = ((valor - 273.15) * 1.8) + 32;
+            document.getElementById("resultado").innerHTML = `${valor}K é igual a ${resultado.toFixed(2)}°F`;
+        }
+      }
+    </script>
+  </body>
+</html>
