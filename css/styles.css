@@ -92,5 +92,14 @@ input[type="number"] {
 #video-popup {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 10px;
+}
+
+#font {
+    font-size: 14px;
+    color: rgb(190, 190, 190);
+}
+
+#font a {
+    color: rgb(190, 190, 190);
 }
